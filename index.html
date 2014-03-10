@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Grunt + WP</title>
+
+    <meta name="description" content="Grunt + WordPress presentation for Web Developer Communication 3/10">
+    <meta name="author" content="Mike Burns">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section>
+          <h1>Grunt + WordPress</h1>
+          <p>
+            <small>Created by <a href="mailto:mgburns@bu.edu">Mike Burns</a></small>
+          </p>
+        </section>
+
+        <section>
+          <h2>Core Development Landscape</h2>
+          <p>A quick look at recent improvements to WordPress development community.</p>
+        </section>
+
+        <section>
+          <h3>Circa 2012</h3>
+          <ul>
+            <li class="fragment">Community: <a href="http://wordpress.org/">WordPress dot org</a></li>
+            <li class="fragment">Code: <a href="http://core.svn.wordpress.org/">core.svn.wordpress.org</a></li>
+            <li class="fragment">Tests: <a href="http://unit-tests.svn.wordpress.org//">unit-tests.svn.wordpress.org</a></li>
+            <li class="fragment">Bugs: <a href="http://core.trac.wordpress.org/">core.trac.wordpress.org</a></li>
+            <li class="fragment">Chat: <a href="https://irclogs.wordpress.org/chanlog.php?channel=wordpress-dev">IRC &ndash; #wordpress-dev</a></li>
+          </ul>
+
+          <aside class="notes" data-markdown>
+            To those of you who don't follow WordPress core development every day, some quick background.
+
+            Just a few years ago if you were looking to get involved in WordPress development there were a few places to go:
+
+            1. WordPress.org - Home of WordPress - download the code, development blog and documentation at codex.wordpress.org. Audience - users self-hosting WordPress.
+            2. core.svn.wordpress.org -- Point your SVN client here to download the bleeding edge release. Audience - developers, savvy-end users.
+            2. unit-tests.svn.wordpress.org -- Test framework and test cases lived in separate repository.
+            3. core.trac.wordpress.org -- Bug tracking using the Python-based Trac tool
+            4. IRC - A few different channels, but #wordpress-dev is where the core devs hang out and meetings take place
+          </aside>
+        </section>
+
+        <section>
+          <h3>Improvements since 2013...</h3>
+
+          <aside class="notes" data-markdown>
+            A surge of activity in the past few months in lowing the barrier to entry for budding core contributors.
+          </aside>
+        </section>
+
+        <section>
+          <section>
+            <h3><a href="http://make.wordpress.org">make.wordpress.org</a></h3>
+            <p>Increased visibility through suite of P2-enabled sites.</p>
+          </section>
+          <section>
+            <a href="http://make.wordpress.org">
+              <img src="img/make-wordpress-org.png" alt="" />
+            </a>
+          </section>
+          <section>
+            <a href="http://make.wordpress.org/core/">
+              <img src="img/make-wordpress-core.jpg" alt="" />
+            </a>
+          </section>
+          <section>
+            <img src="img/make-wordpress-core-comments.jpg" alt="" />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Trac Polishing</h3>
+            <p>Prettier, Better Organized and Less Intimdating to newcomers</p>
+
+            <aside class="notes" data-markdown>
+              - Revamped UI
+              - Tighter integration with other tools (make sites, SVN, IRC)
+              - Easier ticket creation
+              - Better ticket organization in to components and milestones
+            </aside>
+          </section>
+          <section>
+            <img src="img/wordpress-trac-ticket.jpg" alt="" />
+          </section>
+          <section>
+            <img src="img/wordpress-trac-workflows.jpg" alt="" />
+          </section>
+          <section>
+            <img src="img/wordpress-build-component.jpg" alt="" />
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Contributor Handbooks</h3>
+            <p>Project philosophies, code standards, patch writing, and more in the <a href="http://make.wordpress.org/core/handbook/">Contributor Handbook</a>.</p>
+          </section>
+          <section>
+            <img src="img/wordpress-core-handbook.jpg" alt="" />
+          </section>
+          <section>
+            <img src="img/wordpress-js-standards.jpg" alt="" />
+          </section>
+        </section>
+
+        <section>
+
+          <section>
+            <h3><a href="http://develop.svn.wordpress.org/trunk">develop.svn.wordpress.org</a></h3>
+            <p>New repository for core development</p>
+          </section>
+
+          <section>
+            <img src="img/wordpress-frontier-for-core-dev.jpg" alt="" />
+
+            <aside class="notes" data-markdown>
+              A blog post on August 6, 2013 kicked it off.
+            </aside>
+          </section>
+
+          <section>
+            <h4>Directory structure</h4>
+            <ul>
+              <li><strong>src/</strong> &mdash; WordPress source code</li>
+              <li><strong>tests/</strong> &mdash; Test suite / test cases (PHPUnit and QUnit)</li>
+              <li><strong>tools/</strong> &mdash; Build tools (i18n)</li>
+              <li><strong>build/</strong> &mdash; Build directory</li>
+            </ul>
+
+            <aside class="notes" data-markdown>
+              New home for the WordPress codebase.
+
+              Relegates WP to a subdirectory -- src
+              Brings code from unit-tests.svn.wordpress.org in to the test/ directory
+              Brings in internationalization tools in to build/
+            </aside>
+          </section>
+
+          <section>
+            <h4>Root files</h4>
+            <ul>
+              <li>.gitignore</li>
+              <li>.jshintrc</li>
+              <li>.travis.yml</li>
+              <li><strong>Gruntfile.js</strong></li>
+              <li>package.json</li>
+              <li>phpunit.xml.dist</li>
+            </ul>
+
+            <aside class="notes" data-markdown>
+              The new repository structure opens up many possiblities for root dotfiles.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Tied together by</h3>
+            <img src="img/grunt-logo.jpg" alt="" />
+          </section>
+
+        </section>
+
+        <!-- Introduction -->
+        <section>
+          <section>
+            <h2>What's a Grunt?</h2>
+          </section>
+
+          <section>
+            <p><strong>grunt</strong> <small>noun</small></p>
+            <blockquote>
+              <ul>
+                <li>a short, low sound from the throat</li>
+                <li>a U.S. soldier especially in the Vietnam War</li>
+                <li><strong>a person who does ordinary and boring work</strong></li>
+              </ul>
+            </blockquote>
+            <small>
+              Source: <a href="http://www.merriam-webster.com/dictionary/grunt">Merriam-Webster</a>
+            </small>
+          </section>
+
+          <section>
+            <h3>The Javascript Taskrunner</h3>
+            <small>
+              Source: <a href="http://gruntjs.com/">gruntjs.com</a>
+            </small>
+          </section>
+
+        </section>
+
+        <section>
+          <h3>What is a Task Runner?</h3>
+          <ul>
+            <li>Tool that makes developers lives easier</li>
+            <li>Tool that makes it easier to get code ready for production</li>
+          </ul>
+        </section>
+
+        <!-- History -->
+        <section>
+          <h3>A Brief History</h3>
+
+          <aside class="notes" data-markdown>
+            Tools like this don't come from nowhere.
+            Put Grunt in context.
+          </aside>
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Before the Web</h3>
+
+            <pre><code class="bash" data-trim>
+gcc -c main.c command.c display.c utils.c
+gcc -o edit main.o command.o display.o utils.o
+            </code></pre>
+
+            <aside class="notes" data-markdown>
+              The idea of a "task runner" is not a new concept, nor is it exclusive to the web.
+
+              Compiled languages like C, Objective-C, etc. have been using them for years.
+              In those environtments the idea of "building" code -- i.e. compiling source files into machine code and linking libraries -- is not optional.
+              The simplest way to do this is to invoke the compiler (e.g. gcc), feeding it a list of files and configuration flags.
+
+              As you might imagine this approach does not scale, and developers quickly realized that building was for the birds.
+            </aside>
+          </section>
+
+          <section>
+            <h3>GNU Make</h3>
+
+            <aside class="notes" data-markdown>
+              Make was one of the first tools to solve this problem, and Grunt borrows a lot of concepts.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Makefile Syntax</h3>
+            <pre><code class="bash" data-trim>
+target ... : prerequisites ...
+    recipe
+    ...
+    ...
+            </code></pre>
+
+            <small>Source: <a href="http://www.gnu.org/software/make/manual/">gnu.org/software/make/</a></small>
+
+            <aside class="notes" data-markdown>
+              With Make developers created a "makefile", a set of instructions for how to build the project.
+
+              Developers could define "build targets" and their prerequistes and provide a "recipe" of build steps for each.
+              Targets were not just confiend to building:
+              - make test -- run unit tests
+              - make clean -- clean build artificats
+              - etc.
+            </aside>
+          </section>
+
+          <section>
+            <pre><code class="bash" data-trim>
+ edit : main.o command.o display.o utils.o
+         gcc -o edit main.o command.o display.o utils.o
+
+ main.o : main.c defs.h
+         gcc -c main.c
+ command.o : command.c defs.h command.h
+         gcc -c command.c
+ display.o : display.c defs.h buffer.h
+         gcc -c display.c
+ utils.o : utils.c defs.h
+         gcc -c utils.c
+ clean :
+         rm edit main.o command.o display.o utils.o
+            </code></pre>
+
+            <small>Source: <a href="http://www.gnu.org/software/make/manual/">gnu.org/software/make/</a></small>
+          </section>
+
+          <section>
+            <pre><code class="bash" data-trim>
+$ make            # Build the project
+$ make test       # Run unit tests
+$ make install    # Install resulting binary in your $PATH
+$ make clean      # Clean up build artifacts
+            </code></pre>
+
+            <aside class="notes" data-markdown>
+              With a makefile in place the build process (and associated tasks) can be trigger with some simple commands.
+
+              A much easier way to build a project -- much less error prone, much easier to share among developers, and much easier to automate.
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h3>Enter The Web</h3>
+
+            <aside class="notes" data-trim>
+            In the early days of the web, build tools were unnecessary.
+            You don't need a build tool to upload an HTML file to a web server.
+            So do they exist?
+            </aside>
+          </section>
+
+          <section>
+            <h3>Web Projects Got Hard!</h3>
+          </section>
+
+          <section>
+            <ul>
+              <li>Increase in scale / complexity of web projects</li>
+              <li>Focus on performance</li>
+              <li>Team environments</li>
+            </ul>
+
+            <aside class="notes" data-markdown>
+              Grunt and tools like it were built to scratch an itch that many front-end developers started feeling a few years ago.
+
+              1. Increase in size and complexity of web projects
+              3. Performance rennaisance brought on by the age of mobile
+              4. Team environments and some of the complexities they introduce -- getting new developers started on a project, consistent development processes, etc.
+            </aside>
+          </section>
+
+          <section>
+            <p>We built tools to make our lives easier</p>
+          </section>
+
+          <section>
+            <ul>
+              <li>SASS / Less</li>
+              <li>Coffeescript</li>
+              <li>jslint / jshint</li>
+              <li>Etc...</li>
+            </ul>
+          </section>
+
+          <section>
+            <p>We got *really* cozy with our terminals. But...</p>
+
+            <pre><code class="bash" data-trim>
+$ sass --watch app/sass:public/stylesheets
+$ coffee -o lib/ -cw src/
+$ uglifyjs --self -c -m -o /tmp/uglifyjs.js
+$ jshint --reporter=myreporter.js myfile.js
+            </code></pre>
+          </section>
+
+          <section>
+            <h3>One Tool To Rule Them All...</h3>
+
+            <aside class="notes" data-markdown>
+            As the number of tools exploded, the need for a unified interface for project builds became apparent.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Why use a task runner?</h3>
+
+            <blockquote>In one word: automation. The less work you have to do when performing repetitive tasks like minification, compilation, unit testing, linting, etc, the easier your job becomes. After you've configured it, a task runner can do most of that mundane work for you—and your team—with basically zero effort.</blockquote>
+
+            <small>Source: <a href="http://gruntjs.com/">gruntjs.com</a></small>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h2>Prerequisites</h2>
+          </section>
+
+          <section>
+            <h2>1. Install Node / NPM</h2>
+            <img src="img/nodejs-logo-dark.jpg" alt="nodejs" />
+
+            <aside class="notes" data-markdown>
+              Grunt is a Javascript Task Runner built with Javascript, so you need a Javascript run time to use it.
+              In this case V8 by way of Node.js.
+
+              NPM is the de facto package manager for Node.js, and is used to install Grunt itself as well as the
+              plethora of community curated plugins.
+
+              Many of you probably have both of these installed already, but if not visit nodejs.org to get started.
+            </aside>
+          </section>
+
+          <section>
+            <pre><code data-trim class="bash">
+              $ brew install node
+            </code></pre>
+
+            <aside class="notes" data-markdown>
+              On the Mac I like Homebrew for node.js installation -- one command and you have both node and npm installed in an easily upgradeable package.
+            </aside>
+          </section>
+
+          <section>
+            <h2>2. Install Grunt CLI</h2>
+            <pre><code data-trim class="bash">
+              $ npm install -g grunt-cli
+            </code></pre>
+
+            <aside class="notes" data-markdown>
+              Once NPM is installed it's one command to install the Grunt CLI.
+              This is a good one to install globally as you're likely to use it on several projects.
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h2>Grunt 101</h2>
+          </section>
+
+          <section>
+            <h3>Configuration Files</h3>
+            <ul>
+              <li class="fragment">package.json</li>
+              <li class="fragment">Gruntfile.js</li>
+            </ul>
+
+            <aside class="notes" data-markdown>
+              1. package.json -- Consumed by the NPM command line client. Used to define development dependencies.
+              2. Gruntfile.js -- Grunt configuration file.  Holds task definitions for the project.
+
+              Both should be committed with your project.
+            </aside>
+          </section>
+
+          <section>
+            <h3>Some Terms</h3>
+            <ul>
+              <li class="fragment">Task</li>
+              <li class="fragment">Target</li>
+            </ul>
+
+            <aside class="notes" data-markdown>
+              1. Task - Something to do with the code. Lint. Test. Compress. Etc.
+              2. Target - Recipient of the task. Names are arbitrary. Target could be "all", "scripts", "styles", etc.
+            </aside>
+          </section>
+
+          <section>
+            <h3>CLI</h3>
+            <pre><code class="bash" data-trim>
+$ grunt &lt;task&gt;[:&lt;target&gt;]
+
+# Examples
+
+$ grunt build           # Run the `grunt build` task on all targets
+$ grunt build:scripts   # Run the build task for "scripts" target only
+$ grunt                 # Run the default task (if confiugred)
+            </code></pre>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h2>Working with Grunt</h2>
+
+            <aside class="notes" data-markdown>
+              There're two different workflows to discuss:
+
+              1. Setting up Grunt with a new project (or introducing it in to an existing one)
+              2. Working on an existing project that has a Gruntfile in place
+            </aside>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Starting a New Project?</h3>
+            <ol>
+              <li class="fragment">Determine what tasks are needed</li>
+              <li class="fragment">Create a package.json file to capture dev. dependencies</li>
+              <li class="fragment">Create a Gruntfile to define the tasks</li>
+              <li class="fragment">Commit both to project root</li>
+              <li class="fragment">Run tasks and prosper</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3>Continuing an Existing Project?</h3>
+            <ol>
+              <li class="fragment">Pull down from source control</li>
+              <li class="fragment">Run tasks and prosper</li>
+            </ol>
+          </section>
+
+          <section>
+            <h3>Best way to learn is by example</h3>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Demo Time</h3>
+            <h2>develop.svn.wordpress.org</h2>
+          </section>
+
+          <section>
+            <h3>Summary</h3>
+
+            <pre><code data-trim class="bash">
+# Fetch project from VCS, install development dependencies
+$ svn co http://develop.svn.wordpress.org/trunk
+$ npm install
+
+# Run tasks and prosper
+$ grunt --help          # List tasks
+$ grunt [build]         # Run default task (build)
+$ grunt uglify:core     # Uglify scripts in the "core" group
+$ grunt jshint:themes   # Lint scripts in the "theme" group with jshint
+$ grunt test            # Run all PHPUnit and QUnit tests
+            </code></pre>
+          </section>
+
+        </section>
+
+        <section>
+
+          <section>
+            <h3>Demo Time</h3>
+            <h2>BU Navigation</h2>
+          </section>
+
+          <section>
+            <h3>Summary</h3>
+
+            <pre><code data-trim class="bash">
+# Fetch project from VCS, install development dependencies
+$ git clone git@github.com:bu-ist/bu-navigation
+
+# Initialize package.json
+$ npm init
+
+# Install Grunt and friends, saving dependencies in package.json
+$ npm install grunt --save-dev
+$ npm install grunt-contrib-uglify --save-dev
+$ npm install grunt-contrib-concat --save-dev
+$ npm install grunt-contrib-watch --save-dev
+
+# Edit Gruntfile...
+
+# Run tasks and prosper
+$ grunt
+$ grunt uglify
+$ grunt concat
+$ grunt watch
+            </code></pre>
+
+            <p>See the <a href="https://github.com/mgburns/bu-navigation/tree/grunt-presentation">grunt-presentation branch</a> of my fork of the navigation plugin.</p>
+          </section>
+
+        </section>
+
+        <section>
+          <h2>Questions?</h2>
+        </section>
+
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'beige',
+        transition: 'linear',
+
+        // theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+        // transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Parallax scrolling
+        // parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+        // parallaxBackgroundSize: '2100px 900px',
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
